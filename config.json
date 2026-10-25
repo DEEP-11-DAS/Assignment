@@ -1,0 +1,37 @@
+{
+  "note": "Documents the settings used in the notebooks. The notebooks hard-code these values; this file is the single place that lists them.",
+  "seed": 26004,
+  "roll_number": "m26ma004",
+  "data": {
+    "dataset": "sklearn.datasets.fetch_olivetti_faces",
+    "identities": 40,
+    "images_per_identity": 10,
+    "split_per_identity": {"train": 6, "val": 2, "test": 2},
+    "features": "raw flattened pixels (4096), no dimensionality reduction",
+    "saved_split": "dat_split.npz",
+    "mask": {"rows": [24, 40], "cols": [24, 40], "value": 0.0}
+  },
+  "q1": {
+    "tree_grid": {"max_depth": [2, 4, 8, 16, null], "min_samples_leaf": [1, 2, 4]},
+    "tie_rule": "first setting in grid order with the highest validation accuracy",
+    "frozen_tree": {"max_depth": null, "min_samples_leaf": 1, "random_state": 26004},
+    "bagging": {"B_values": [1, 5, 10, 25, 50, 100, 200], "bootstrap_size": 240, "bootstrap_seed": "default_rng(26004 + i) for tree i", "tree_random_state": "i", "vote_tie_break": "smaller class label"},
+    "final_B": 100,
+    "disagreement": "mean over up to 50 random tree pairs, measured on the training set",
+    "vote_margin": "winning vote fraction minus runner-up fraction, measured on the validation set"
+  },
+  "q2": {
+    "toy_example": {"samples": 10, "classes": 3, "weak_learner_depth": 1},
+    "samme": {"alpha": "log((1-eps)/eps) + log(K-1)", "K": 40, "stop_if_eps_at_least": 0.975, "eps_zero_clip": 1e-10},
+    "grid": {"weak_learner_depth": [1, 2, 3, 4], "rounds": [10, 25, 50, 100]},
+    "selected_by_validation": {"depth": 4, "rounds": 100, "val_acc": 0.425},
+    "depth_used_in_q2c_q2d_q3": 3,
+    "comparison_sizes": [25, 50, 100]
+  },
+  "q3": {
+    "repetitions": 30,
+    "resampling": "within each identity, 6 draws with replacement from its 6 training faces",
+    "models": {"tree": {"max_depth": null, "min_samples_leaf": 1}, "bagging": {"B": 100}, "boosting": {"weak_learner_depth": 3, "rounds": 100}},
+    "depth_study": {"depths": [2, 5, null], "bagging_B": 100}
+  }
+}
